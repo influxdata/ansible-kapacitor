@@ -11,7 +11,7 @@ This role will:
 
 ## Installation
 
-  $ ansible-galaxy install influxdata.kapacitor
+`$ ansible-galaxy install influxdata.kapacitor`
 
 ## Usage
 
