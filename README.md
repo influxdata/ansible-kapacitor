@@ -9,6 +9,10 @@ This role will:
 * Upload any TICK scripts specified
 * Manage any defined tasks
 
+## Installation
+
+  $ ansible-galaxy install influxdata.kapacitor
+
 ## Usage
 
 Example playbook usage:
