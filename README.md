@@ -3,11 +3,11 @@
 Configuration management and change automation for Kapacitor on Linux.
 
 This role will:
-    - Install Kapacitor
-    - Generate and install configs
-    - Manage the Kapacitor service
-    - Upload any TICK scripts specified
-    - Manage any defined tasks
+* Install Kapacitor
+* Generate and install configs
+* Manage the Kapacitor service
+* Upload any TICK scripts specified
+* Manage any defined tasks
 
 ## Usage
 
