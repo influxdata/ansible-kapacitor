@@ -1,0 +1,23 @@
+---
+- name: "Lookup members"
+  uri:
+    url: "http://localhost:9092/kapacitor/v1/cluster"
+    return_content: 'yes'
+  register: response
+  when:
+    - kapacitor_cluster_join == true
+    - kapacitor_cluster_leader != ""
+    - kapacitor_cluster_leader != ansible_hostname
+  delegate_to: "{{ kapacitor_cluster_leader }}"
+  tags:
+    - 'kapacitor-cluster'
+
+- name: "Add nodes to cluster"
+  command: "kapacitorctl member add {{ ansible_hostname }}:9091"
+  delegate_to: "{{ kapacitor_cluster_leader }}"
+  when:
+    - kapacitor_cluster_join == true
+    - kapacitor_cluster_leader != ""
+    - kapacitor_cluster_leader != ansible_hostname
+    - ansible_hostname not in (response.json.members | selectattr('status', 'equalto', 'alive') | map(attribute='gossip-address') | map('regex_replace', ':.*') | list)
+  tags: 'kapacitor-cluster'

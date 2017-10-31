@@ -1,0 +1,8 @@
+---
+- name: "Install configs"
+  template:
+    src: 'kapacitor.conf.j2'
+    dest: "{{ kapacitor_config_file }}"
+  notify: 'restart kapacitor'
+  tags:
+    - 'kapacitor-configure'

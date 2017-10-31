@@ -1,0 +1,20 @@
+---
+- name: 'Enterprise Linux - Add InfluxData repository file'
+  template:
+    src: 'influxdata.repo.j2'
+    dest: '/etc/yum.repos.d/influxdata.repo'
+    force: 'yes'
+    backup: 'yes'
+  when: kapacitor_use_repo
+
+- name: 'Enterprise Linux - Install '
+  yum:
+    name: 'kapacitor'
+    state: 'latest'
+  when: kapacitor_use_repo
+
+- name: 'Enterprise Linux - Install Chrongraf via URL'
+  yum:
+    name: "{{ kapacitor_rpm_pkg_url }}"
+    state: 'present'
+  when: not kapacitor_use_repo

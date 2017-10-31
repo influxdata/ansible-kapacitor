@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+httppost = {{ kapacitor_httppost|to_json }}
+hostname = {{ kapacitor_hostname|to_json }}
+data_dir = {{ kapacitor_data_dir|to_json }}
+skip-config-overrides = {{ kapacitor_skip_config_overrides|to_json }}
+default-retention-policy = {{ kapacitor_default_retention_policy|to_json }}
+
+{% for component, values in kapacitor_component_config.iteritems() %}
+[{{ component }}]
+{% for k, v in values.iteritems() %}
+  {{ k }} = {{ v|to_json }}
+{% endfor %}
+
+{% endfor %}

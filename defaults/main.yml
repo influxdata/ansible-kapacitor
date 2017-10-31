@@ -1,0 +1,110 @@
+---
+kapacitor_use_repo: true
+kapacitor_pkg_url: 'https://dl.influxdata.com/kapacitor/releases/kapacitor_1.3.1_amd64.deb'
+kapacitor_deb_pkg_url: 'https://dl.influxdata.com/kapacitor/releases/kapacitor_1.3.1_amd64.deb'
+kapacitor_rpm_pkg_url: 'https://dl.influxdata.com/kapacitor/releases/kapacitor-1.3.1.x86_64.rpm'
+kapacitor_config_file: '/etc/kapacitor/kapacitor.conf'
+kapacitor_apt_repo_url: "deb https://repos.influxdata.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
+kapacitor_http_shared_secret: ""
+kapacitor_http_auth_enabled: 'true'
+kapacitor_tick_dest_dir: "/usr/local/etc/kapacitor/tick"
+kapacitor_tick_src_dir: './tests/files/tick'
+kapacitor_httppost: []
+kapacitor_hostname: "{{ ansible_hostname }}"
+kapacitor_data_dir: "/var/lib/kapacitor"
+kapacitor_skip_config_overrides: false
+kapacitor_default_retention_policy: ""
+kapacitor_rpc_port: 9091
+# Tasks to define, enable or disable, examples
+kapacitor_tasks: [
+  # Task definitions are defined by each dict in this list, required is an id, type, dbrp definition and enabled/disabled status
+  #{ id: "example", type: "stream", tick: "{{ kapacitor_tick_dest_dir }}/example.tick", dbrp: "telegraf.autogen", enabled: true },
+  #{ id: "example", type: "stream", tick: "{{ kapacitor_tick_dest_dir }}/example.tick", dbrp: "telegraf.autogen", enabled: false },
+]
+kapacitor_cluster_join: false
+kapacitor_cluster_leader: ""
+# The following data is used to compile all the individual Kapacitor component configurations, such as [http], [enterprise] etc.
+kapacitor_component_config:
+  http:
+    bind-address: ":9092"
+    auth-enabled: false
+    log-enabled: true
+    write-tracing: false
+    pprof-enabled: true
+    https-enabled: false
+    https-certificate: "/etc/ssl/kapacitor.pem"
+    shutdown-timeout: "10s"
+    shared-secret: ""
+  replay:
+    dir: "/var/lib/kapacitor/replay"
+  storage:
+    boltdb: "/var/lib/kapacitor/kapacitor.db"
+  task:
+    dir: "/var/lib/kapacitor/tasks"
+    snapshot-interval: "1m0s"
+  logging:
+    file: "/var/log/kapacitor/kapacitor.log"
+    level: "INFO"
+  config-override:
+    enabled: false
+  reporting:
+    enabled: true
+    url: "https://usage.influxdata.com"
+  stats:
+    enabled: true
+    stats-interval: "10s"
+    database: "_kapacitor"
+    retention-policy: "autogen"
+    timing-sample-rate: 0.1
+    timing-movavg-size: 1000
+  auth:
+    cache-expiration: "10m0s"
+    bcrypt-cost: 10
+    plutonium-meta-addr: ""
+  cluster:
+    bind-address: ":9090"
+    advertise-address: ""
+    roles: ["worker"]
+    gossip-members: 0
+    gossip-interval: "0s"
+    gossip-sync-interval: "0s"
+  alert:
+    redundancy: 0
+    delay-per-member: "10s"
+    full-sync-interval: "5m0s"
+  rpc:
+    bind-address: ":9091"
+    advertise-address: ""
+  '[influxdb]':
+    enabled: true
+    name: "default"
+    default: true
+    urls: ["http://localhost:8086"]
+    username: ""
+    password: ""
+    ssl-ca: ""
+    ssl-cert: ""
+    ssl-key: ""
+    insecure-skip-verify: false
+    timeout: "0s"
+    disable-subscriptions: false
+    subscription-protocol: "http"
+    subscription-mode: "cluster"
+    kapacitor-hostname: ""
+    http-port: 0
+    udp-bind: ""
+    udp-buffer: 1000
+    udp-read-buffer: 0
+    startup-timeout: "5m0s"
+    subscriptions-sync-interval: "1m0s"
+  enterprise:
+    registration-enabled: false
+    registration-server-url: ""
+    license-key: ""
+    license-path: ""
+  slack:
+    enabled: false
+    url: ""
+    channel: '#monitoring'
+    global: false
+    state-changes-only: false

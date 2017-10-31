@@ -1,0 +1,3 @@
+---
+- include: "install-{{ ansible_os_family | lower }}.yml"
+  tags: ['kapacitor', 'kapacitor-install']

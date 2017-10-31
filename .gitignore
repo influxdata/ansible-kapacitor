@@ -1,0 +1,7 @@
+.vagrant
+*.log
+*.retry
+.gems
+.bin
+.bundle
+.kitchen

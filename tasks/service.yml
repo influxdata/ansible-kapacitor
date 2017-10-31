@@ -1,0 +1,11 @@
+---
+- name: 'Manage the Kapacitor service'
+  service:
+    name: 'kapacitor'
+    state: 'started'
+    enabled: 'yes'
+  tags: 'kapacitor-service'
+
+- name: 'Load any pending configuration changes'
+  meta: 'flush_handlers'
+  tags: 'kapacitor-service'

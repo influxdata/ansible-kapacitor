@@ -1,0 +1,7 @@
+---
+- include: 'install.yml'
+- include: 'configure.yml'
+- include: 'service.yml'
+- include: 'tick.yml'
+- include: 'cluster.yml'
+  when: kapacitor_cluster_join == true

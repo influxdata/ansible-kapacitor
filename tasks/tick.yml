@@ -1,0 +1,34 @@
+---
+- name: 'Create kapacitor dsl directory'
+  file:
+    path:  "{{ kapacitor_tick_dest_dir }}"
+    state: 'directory'
+    recurse: 'yes'
+  tags: 'kapacitor-tick'
+
+- name: 'Copy kapacitor task definition files'
+  copy:
+    src:  "{{ item }}"
+    dest: "{{ kapacitor_tick_dest_dir }}"
+  with_fileglob:
+    - "{{ kapacitor_tick_src_dir }}/*.tick"
+  tags: 'kapacitor-tick'
+
+- name: 'Define Kapacitor tasks'
+  shell: |
+      kapacitor define {{ item.id }} \
+          -type {{ item.type }} \
+          -tick {{ item.tick }} \
+          -dbrp {{ item.dbrp }}
+  when: item.enabled == true
+  with_items: "{{ kapacitor_tasks }}"
+  tags: 'kapacitor-tick'
+
+- name: 'Enable / disable Kapacitor tasks'
+  shell: "kapacitor {% if item.enabled %}enable{% else %}disable{% endif %} {{ item.id }}"
+  when:
+    - kapacitor_tasks | length > 0
+  with_items: "{{ kapacitor_tasks }}"
+  tags:
+    - 'kapacitor-tick'
+    - 'kapacitor-task'

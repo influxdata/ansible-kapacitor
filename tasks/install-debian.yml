@@ -1,0 +1,29 @@
+---
+- name: 'Debian - Install kapacitor via URL'
+  apt:
+      deb: "{{ kapacitor_deb_pkg_url }}"
+      state: 'present'
+  when: not kapacitor_use_repo
+  tags: 'kapacitor-install'
+
+- name: 'Debian - Install apt-transport-https allows https apt downloads'
+  apt:
+    name: 'apt-transport-https'
+    state: 'present'
+  when: kapacitor_use_repo
+
+- name: 'Debian - Import InfluxData GPG signing key'
+  apt_key:
+    url: 'https://repos.influxdata.com/influxdb.key'
+    state: 'present'
+  when: kapacitor_use_repo
+
+- name: 'Debian - Manage InfluxData repository'
+  apt_repository:
+    repo: "{{ kapacitor_apt_repo_url }}"
+    state: "{{ 'present' if kapacitor_use_repo else 'absent' }}"
+
+- name: 'Debian - Install kapacitor from apt repository'
+  apt:
+    name: 'kapacitor'
+  when: kapacitor_use_repo

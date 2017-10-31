@@ -1,0 +1,35 @@
+---
+- hosts: 'localhost'
+  roles:
+    - 'ansible-kapacitor'
+  vars:
+    kapacitor_tick_src_dir: '/tmp/ansible-kapacitor/roles/kapacitor/test/files/tick'
+    kapacitor_component_config:
+      http:
+        "bind-address": ":9092"
+        "write-tracing": false
+        "pprof-enabled": true
+        "https-enabled": false
+        "https-certificate": "/etc/ssl/kapacitor.pem"
+        "shutdown-timeout": "10s"
+        "shared-secret": ""
+      logging:
+        file: "/var/log/kapacitor/kapacitor.log"
+        level: "DEBUG"
+      replay:
+        dir: "/var/lib/kapacitor/replay"
+      cluster:
+        "advertise-address": ""
+        "roles": ["worker"]
+        "bind-address": ":9090"
+        "gossip-members": 0
+        "gossip-sync-interval": "0s"
+        "gossip-interval": "0s"
+      "[influxdb]":
+        enabled: false
+      storage:
+        boltdb: "/var/lib/kapacitor/kapacitor.db"
+    kapacitor_tasks: [
+      { id: "example", type: "stream", tick: "{{ kapacitor_tick_dest_dir }}/example.tick", dbrp: "telegraf.autogen", enabled: true },
+      { id: "example", type: "stream", tick: "{{ kapacitor_tick_dest_dir }}/example.tick", dbrp: "telegraf.autogen", enabled: false },
+    ]
