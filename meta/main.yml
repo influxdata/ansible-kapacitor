@@ -1,0 +1,25 @@
+---
+galaxy_info:
+  author: 'Paul Myjavec'
+  description: 'Kapacitor for Linux'
+  company: "InfluxData"
+  license: "license (MIT)"
+  min_ansible_version: '2.3.2'
+  platforms:
+    - name: 'Ubuntu'
+      versions:
+        - 'all'
+    - name: 'Debian'
+      versions:
+        - 'all'
+    - name: 'EL'
+      versions:
+        - 6
+        - 7
+  categories:
+    - 'system'
+    - 'monitoring'
+    - 'influxdb'
+    - 'analytics'
+
+dependencies: []
