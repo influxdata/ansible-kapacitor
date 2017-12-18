@@ -3,7 +3,9 @@
   roles:
     - 'ansible-kapacitor'
   vars:
-    kapacitor_tick_src_dir: '/tmp/ansible-kapacitor/roles/kapacitor/test/files/tick'
+    kapacitor_tick_script_dir: '/tmp/kitchen/roles/ansible-kapacitor/test/files/tick/scripts'
+    kapacitor_tick_template_dir: '/tmp/kitchen/roles/ansible-kapacitor/test/files/tick/template'
+    kapacitor_tick_var_dir: '/tmp/kitchen/roles/ansible-kapacitor/test/files/tick/var'
     kapacitor_component_config:
       http:
         "bind-address": ":9092"
@@ -29,7 +31,11 @@
         enabled: false
       storage:
         boltdb: "/var/lib/kapacitor/kapacitor.db"
+    kapacitor_templates: [
+      { id: "example", type: "stream", tick: "{{ kapacitor_tick_template_dest_dir }}/example.tick"},
+    ]
     kapacitor_tasks: [
-      { id: "example", type: "stream", tick: "{{ kapacitor_tick_dest_dir }}/example.tick", dbrp: "telegraf.autogen", enabled: true },
-      { id: "example", type: "stream", tick: "{{ kapacitor_tick_dest_dir }}/example.tick", dbrp: "telegraf.autogen", enabled: false },
+      { id: "example", type: "stream", tick: "{{ kapacitor_tick_script_dest_dir }}/example.tick", dbrp: "telegraf.autogen", enabled: true },
+      { id: "example", type: "stream", tick: "{{ kapacitor_tick_script_dest_dir }}/example.tick", dbrp: "telegraf.autogen", enabled: false },
+      { id: "template_test", template: "example", vars: "{{ kapacitor_tick_var_dest_dir }}/example.json", dbrp: "telegraf.autogen", enabled: true },
     ]

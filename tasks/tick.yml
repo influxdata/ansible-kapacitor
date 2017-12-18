@@ -1,24 +1,54 @@
 ---
-- name: 'Create kapacitor dsl directory'
+- name: 'Create Kapacitor DSL directories'
   file:
-    path:  "{{ kapacitor_tick_dest_dir }}"
+    path:  "{{ item }}"
     state: 'directory'
     recurse: 'yes'
+  with_items:
+    - "{{ kapacitor_tick_script_dest_dir }}"
+    - "{{ kapacitor_tick_template_dest_dir }}"
+    - "{{ kapacitor_tick_var_dest_dir }}"
   tags: 'kapacitor-tick'
 
-- name: 'Copy kapacitor task definition files'
+- name: 'Copy Kapacitor TICK script files'
   copy:
     src:  "{{ item }}"
-    dest: "{{ kapacitor_tick_dest_dir }}"
+    dest: "{{ kapacitor_tick_script_dest_dir }}"
   with_fileglob:
-    - "{{ kapacitor_tick_src_dir }}/*.tick"
+    - "{{ kapacitor_tick_script_dir }}/*.tick"
+  tags: 'kapacitor-tick'
+
+- name: 'Copy Kapacitor TICK template files'
+  copy:
+    src:  "{{ item }}"
+    dest: "{{ kapacitor_tick_template_dest_dir }}"
+  with_fileglob:
+    - "{{ kapacitor_tick_template_dir }}/*.tick"
+  tags: 'kapacitor-tick'
+
+- name: 'Copy Kapacitor TICK var files'
+  copy:
+    src:  "{{ item }}"
+    dest: "{{ kapacitor_tick_var_dest_dir }}"
+  with_fileglob:
+    - "{{ kapacitor_tick_var_dir }}/*.json"
+  tags: 'kapacitor-tick'
+
+- name: 'Define Kapacitor templates'
+  shell: |
+      kapacitor define-template {{ item.id }} \
+          -type {{ item.type }} \
+          -tick {{ item.tick }} \
+  with_items: "{{ kapacitor_templates }}"
   tags: 'kapacitor-tick'
 
 - name: 'Define Kapacitor tasks'
   shell: |
       kapacitor define {{ item.id }} \
-          -type {{ item.type }} \
-          -tick {{ item.tick }} \
+          {%if item.type is defined %}-type {{ item.type }} \ {% endif %}
+          {%if item.vars is defined %}-vars {{ item.vars }} \ {% endif %}
+          {%if item.template is defined %}-template {{ item.template }} \ {% endif %}
+          {%if item.template is not defined %}-tick {{ item.tick }} \ {% endif %}
           -dbrp {{ item.dbrp }}
   when: item.enabled == true
   with_items: "{{ kapacitor_tasks }}"

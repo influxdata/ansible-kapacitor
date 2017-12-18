@@ -7,14 +7,23 @@ kapacitor_config_file: '/etc/kapacitor/kapacitor.conf'
 kapacitor_apt_repo_url: "deb https://repos.influxdata.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
 kapacitor_http_shared_secret: ""
 kapacitor_http_auth_enabled: 'true'
-kapacitor_tick_dest_dir: "/usr/local/etc/kapacitor/tick"
-kapacitor_tick_src_dir: './tests/files/tick'
+kapacitor_tick_work_dir: "/usr/local/etc/kapacitor/tick"
+kapacitor_tick_script_dest_dir: "{{ kapacitor_tick_work_dir }}/script"
+kapacitor_tick_template_dest_dir: "{{ kapacitor_tick_work_dir }}/template"
+kapacitor_tick_var_dest_dir: "{{ kapacitor_tick_work_dir }}/var"
+kapacitor_tick_script_dir: './tests/files/tick/script'
+kapacitor_tick_template_dir: './tests/files/tick/template'
+kapacitor_tick_var_dir: './tests/files/tick/var'
 kapacitor_httppost: []
 kapacitor_hostname: "{{ ansible_hostname }}"
 kapacitor_data_dir: "/var/lib/kapacitor"
 kapacitor_skip_config_overrides: false
 kapacitor_default_retention_policy: ""
 kapacitor_rpc_port: 9091
+kapacitor_templates: [
+  #{ id: "example", type: "stream", tick: "{{ kapacitor_tick_dest_dir }}/example.tick", dbrp: "telegraf.autogen", enabled: true },
+  #{ id: "example", type: "stream", tick: "{{ kapacitor_tick_dest_dir }}/example.tick", dbrp: "telegraf.autogen", enabled: false },
+]
 # Tasks to define, enable or disable, examples
 kapacitor_tasks: [
   # Task definitions are defined by each dict in this list, required is an id, type, dbrp definition and enabled/disabled status
