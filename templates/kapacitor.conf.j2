@@ -5,6 +5,13 @@ data_dir = {{ kapacitor_data_dir|to_json }}
 skip-config-overrides = {{ kapacitor_skip_config_overrides|to_json }}
 default-retention-policy = {{ kapacitor_default_retention_policy|to_json }}
 
+{% for config in kapacitor_config_influx %}
+[[influxdb]]
+{% for k, v in config|dictsort %}
+  {{ k }} = {{ v|to_json }}
+{% endfor %}
+{% endfor %}
+
 {% for component, values in kapacitor_component_config.iteritems() %}
 [{{ component }}]
 {% for k, v in values.iteritems() %}

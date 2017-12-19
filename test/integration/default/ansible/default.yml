@@ -27,8 +27,6 @@
         "gossip-members": 0
         "gossip-sync-interval": "0s"
         "gossip-interval": "0s"
-      "[influxdb]":
-        enabled: false
       storage:
         boltdb: "/var/lib/kapacitor/kapacitor.db"
     kapacitor_templates: [

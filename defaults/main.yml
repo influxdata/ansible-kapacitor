@@ -32,6 +32,28 @@ kapacitor_tasks: [
 ]
 kapacitor_cluster_join: false
 kapacitor_cluster_leader: ""
+kapacitor_config_influx:
+  - name: "default"
+    enabled: false
+    default: true
+    urls: ["http://localhost:8086"]
+    username: ""
+    password: ""
+    ssl-ca: ""
+    ssl-cert: ""
+    ssl-key: ""
+    insecure-skip-verify: false
+    timeout: "0s"
+    disable-subscriptions: false
+    subscription-protocol: "http"
+    subscription-mode: "cluster"
+    kapacitor-hostname: ""
+    http-port: 0
+    udp-bind: ""
+    udp-buffer: 1000
+    udp-read-buffer: 0
+    startup-timeout: "5m0s"
+    subscriptions-sync-interval: "1m0s"
 # The following data is used to compile all the individual Kapacitor component configurations, such as [http], [enterprise] etc.
 kapacitor_component_config:
   http:
@@ -84,28 +106,6 @@ kapacitor_component_config:
   rpc:
     bind-address: ":9091"
     advertise-address: ""
-  '[influxdb]':
-    enabled: true
-    name: "default"
-    default: true
-    urls: ["http://localhost:8086"]
-    username: ""
-    password: ""
-    ssl-ca: ""
-    ssl-cert: ""
-    ssl-key: ""
-    insecure-skip-verify: false
-    timeout: "0s"
-    disable-subscriptions: false
-    subscription-protocol: "http"
-    subscription-mode: "cluster"
-    kapacitor-hostname: ""
-    http-port: 0
-    udp-bind: ""
-    udp-buffer: 1000
-    udp-read-buffer: 0
-    startup-timeout: "5m0s"
-    subscriptions-sync-interval: "1m0s"
   enterprise:
     registration-enabled: false
     registration-server-url: ""
