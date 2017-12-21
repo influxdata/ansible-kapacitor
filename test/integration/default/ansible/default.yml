@@ -6,29 +6,6 @@
     kapacitor_tick_script_dir: '/tmp/kitchen/roles/ansible-kapacitor/test/files/tick/scripts'
     kapacitor_tick_template_dir: '/tmp/kitchen/roles/ansible-kapacitor/test/files/tick/template'
     kapacitor_tick_var_dir: '/tmp/kitchen/roles/ansible-kapacitor/test/files/tick/var'
-    kapacitor_component_config:
-      http:
-        "bind-address": ":9092"
-        "write-tracing": false
-        "pprof-enabled": true
-        "https-enabled": false
-        "https-certificate": "/etc/ssl/kapacitor.pem"
-        "shutdown-timeout": "10s"
-        "shared-secret": ""
-      logging:
-        file: "/var/log/kapacitor/kapacitor.log"
-        level: "DEBUG"
-      replay:
-        dir: "/var/lib/kapacitor/replay"
-      cluster:
-        "advertise-address": ""
-        "roles": ["worker"]
-        "bind-address": ":9090"
-        "gossip-members": 0
-        "gossip-sync-interval": "0s"
-        "gossip-interval": "0s"
-      storage:
-        boltdb: "/var/lib/kapacitor/kapacitor.db"
     kapacitor_templates: [
       { id: "example", type: "stream", tick: "{{ kapacitor_tick_template_dest_dir }}/example.tick"},
     ]
@@ -37,3 +14,12 @@
       { id: "example", type: "stream", tick: "{{ kapacitor_tick_script_dest_dir }}/example.tick", dbrp: "telegraf.autogen", enabled: false },
       { id: "template_test", template: "example", vars: "{{ kapacitor_tick_var_dest_dir }}/example.json", dbrp: "telegraf.autogen", enabled: true },
     ]
+    kapacitor_httppost:
+      - endpoint: "example"
+        url: "http://example.com"
+        headers: { Example: "your-key", ExampleTwo: "your-key-2" }
+        basic-auth: { Username: "your-key", Password: "your-key-2" }
+        alert-template: '{% raw %}{{.Message}}:{{range .Data.Series}}{{.Tags}},{{range .Values}}{{.}}{{end}}{{end}}{% endraw %}'
+        alert-template-file: "/path/to/template/file"
+        row-template: '{% raw %}{{.Name}} host={{index .Tags \"host\"}}{{range .Values}} {{index . "time"}} {{index . "value"}}{{end}}{% endraw %}'
+        row-template-file: "/path/to/template/file"

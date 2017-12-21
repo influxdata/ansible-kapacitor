@@ -1,16 +1,28 @@
 # {{ ansible_managed }}
-httppost = {{ kapacitor_httppost | to_json }}
 hostname = "{{ kapacitor_hostname }}"
 data_dir = "{{ kapacitor_data_dir }}"
 skip-config-overrides = {{ kapacitor_skip_config_overrides| to_json }}
 default-retention-policy = "{{ kapacitor_default_retention_policy }}"
 
-{% for config in kapacitor_config_influx %}
+{% for config in kapacitor_influx %}
 [[influxdb]]
 {% for k, v in config|dictsort %}
   {{ k }} = {{ v| to_json }}
 {% endfor %}
 {% endfor %}
+
+{% if kapacitor_httppost is defined %}
+{% for config in kapacitor_httppost %}
+[[httppost]]
+{% for k, v in config|dictsort %}
+{% if k in ['headers', 'basic-auth'] %}
+  {{ k }} = { {% for x, y in v|dictsort %} {{ x }} = {{ y | to_json }}, {% endfor %} }
+{% else %}
+  {{ k }} = {{ v| to_json }}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endif %}
 
 [http]
   auth-enabled = {{ kapacitor_http_auth_enabled | to_json }}

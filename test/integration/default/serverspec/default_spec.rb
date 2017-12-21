@@ -36,6 +36,12 @@ describe file('/usr/local/etc/kapacitor/tick/var/example.json') do
   it { should be_file }
 end
 
+describe file('/etc/kapacitor/kapacitor.conf') do
+  its(:content) { should match /[[httppost]]/ }
+  its(:content) { should match /headers = {  Example = "your-key",  ExampleTwo = "your-key-2",  }/ }
+  it { should be_file }
+end
+
 describe command('kapacitor list templates') do
   its(:stdout) { should match /example.*stream/ }
 end

@@ -14,7 +14,6 @@ kapacitor_tick_var_dest_dir: "{{ kapacitor_tick_work_dir }}/var"
 kapacitor_tick_script_dir: './tests/files/tick/script'
 kapacitor_tick_template_dir: './tests/files/tick/template'
 kapacitor_tick_var_dir: './tests/files/tick/var'
-kapacitor_httppost: []
 kapacitor_hostname: "{{ ansible_hostname }}"
 kapacitor_data_dir: "/var/lib/kapacitor"
 kapacitor_skip_config_overrides: false
@@ -32,7 +31,7 @@ kapacitor_tasks: [
 ]
 kapacitor_cluster_join: false
 kapacitor_cluster_leader: ""
-kapacitor_config_influx:
+kapacitor_influx:
   - name: "default"
     enabled: false
     default: true
@@ -170,7 +169,7 @@ kapacitor_stats_stats_interval: "10s"
 kapacitor_stats_timing_movavg_size: 1000
 kapacitor_stats_timing_sample_rate: 0.1
 kapacitor_deadman_global: false
-kapacitor_deadman_id: ""
+kapacitor_deadman_id: "{%raw%}node 'NODE_NAME' in task '{{ .TaskName }}'{%endraw%}"
 kapacitor_deadman_interval: "10s"
-kapacitor_deadman_message: ""
+kapacitor_deadman_message: '{%raw%}{{ .ID }} is {{ if eq .Level \"OK\" }}alive{{ else }}dead{{ end }}: {{ index .Fields \"collected\" | printf \"%0.3f\" }} points/INTERVAL.{%endraw%}'
 kapacitor_deadman_threshold: 0.0
