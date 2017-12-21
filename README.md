@@ -1,5 +1,7 @@
 # Ansible Kapacitor
 
+[![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-influxdata.kapacitor-blue.svg)](https://galaxy.ansible.com/influxdata/kapacitor/)
+
 Configuration management and change automation for Kapacitor on Linux.
 
 This role will:
@@ -22,63 +24,35 @@ Example playbook usage:
   roles:
       - 'kapacitor'
   vars:
+    kapacitor_config_influx:
+      - name: "production01"
+      enabled: true
+      default: true
+      urls: ["https://influxdb.production01.megacorp.com:443"]
+      username: "username"
+      password: "password"
+      ssl-ca: ""
+      ssl-cert: ""
+      ssl-key: ""
+      insecure-skip-verify: false
+      timeout: "0s"
+      disable-subscriptions: false
+      subscription-protocol: "http"
+      subscription-mode: "cluster"
+      kapacitor-hostname: "{{ ansible_hostname }}"
+      http-port: 0
+      udp-bind: ""
+      udp-buffer: 1000
+      udp-read-buffer: 0
+      startup-timeout: "5m0s"
+      subscriptions-sync-interval: "1m0s"
     kapacitor_http_shared_secret: "topsecretsuperlong"
-    kapacitor_tick_src_dir: '../../shared/files/tick'
-    kapacitor_component_config:
-      http:
-        bind-address: ":9092"
-        auth-enabled: false
-        log-enabled: false
-        write-tracing: false
-        pprof-enabled: true
-        https-enabled: false
-        https-certificate: "/etc/ssl/kapacitor.pem"
-        shutdown-timeout: "10s"
-        shared-secret: ""
-      logging:
-        file: "/var/log/kapacitor/kapacitor.log"
-        level: "WARN"
-      config-override:
-        enabled: false
-      reporting:
-        enabled: true
-        url: "https://usage.influxdata.com"
-      stats:
-        enabled: true
-        stats-interval: "10s"
-        database: "_kapacitor"
-        retention-policy: "autogen"
-        timing-sample-rate: 0.1
-        timing-movavg-size: 1000
-      '[influxdb]':
-        enabled: true
-        name: "{{ site_environment }}"
-        default: true
-        urls: ["https://example.com:443"]
-        username: ""
-        password: ""
-        ssl-ca: ""
-        ssl-cert: ""
-        ssl-key: ""
-        insecure-skip-verify: false
-        timeout: "0s"
-        disable-subscriptions: false
-        subscription-protocol: "http"
-        subscription-mode: "cluster"
-        kapacitor-hostname: "{{ ansible_hostname }}"
-        http-port: 0
-        udp-bind: ""
-        udp-buffer: 1000
-        udp-read-buffer: 0
-        startup-timeout: "5m0s"
-        subscriptions-sync-interval: "1m0s"
-      slack:
-        enabled: true
-        url: "https://hooks.slack.com/services/xxx"
-        channel: '#monitoring'
-        global: false
-        state-changes-only: false
-
+    kapacitor_tick_script_dir: '../../shared/files/tick'
+    kapacitor_slack_enabled: true
+    kapacitor_slack_url: "https://hooks.slack.com/services/XXX/ZZZ/SECRET"
+    kapacitor_slack_channel: '#monitoring'
+    kapacitor_slack_global: false
+    kapacitor_slack_state_changes_only: false
 ```
 
 See the `test/integration/ansible` for examples.

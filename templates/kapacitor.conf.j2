@@ -1,21 +1,179 @@
 # {{ ansible_managed }}
-httppost = {{ kapacitor_httppost|to_json }}
-hostname = {{ kapacitor_hostname|to_json }}
-data_dir = {{ kapacitor_data_dir|to_json }}
-skip-config-overrides = {{ kapacitor_skip_config_overrides|to_json }}
-default-retention-policy = {{ kapacitor_default_retention_policy|to_json }}
+httppost = {{ kapacitor_httppost | to_json }}
+hostname = "{{ kapacitor_hostname }}"
+data_dir = "{{ kapacitor_data_dir }}"
+skip-config-overrides = {{ kapacitor_skip_config_overrides| to_json }}
+default-retention-policy = "{{ kapacitor_default_retention_policy }}"
 
 {% for config in kapacitor_config_influx %}
 [[influxdb]]
 {% for k, v in config|dictsort %}
-  {{ k }} = {{ v|to_json }}
+  {{ k }} = {{ v| to_json }}
 {% endfor %}
 {% endfor %}
 
-{% for component, values in kapacitor_component_config.iteritems() %}
-[{{ component }}]
-{% for k, v in values.iteritems() %}
-  {{ k }} = {{ v|to_json }}
-{% endfor %}
+[http]
+  auth-enabled = {{ kapacitor_http_auth_enabled | to_json }}
+  bind-address = "{{ kapacitor_http_bind_address }}"
+  https-certificate = "{{ kapacitor_http_https_certificate }}"
+  https-enabled = {{ kapacitor_http_https_enabled | to_json }}
+  log-enabled = {{ kapacitor_http_log_enabled | to_json }}
+  pprof-enabled = {{ kapacitor_http_pprof_enabled | to_json }}
+  shared-secret = "{{ kapacitor_http_shared_secret }}"
+  shutdown-timeout = "{{ kapacitor_http_shutdown_timeout }}"
+  write-tracing = {{ kapacitor_http_write_tracing | to_json }}
 
-{% endfor %}
+[replay]
+  dir = "{{ kapacitor_replay_dir }}"
+
+[storage]
+  boltdb = "{{ kapacitor_storage_boltdb }}"
+
+[task]
+  dir = "{{ kapacitor_task_dir }}"
+  snapshot-interval = "{{ kapacitor_task_snapshot_interval }}"
+
+[logging]
+  file = "{{ kapacitor_logging_file }}"
+  level = "{{ kapacitor_logging_level }}"
+
+[collectd]
+  batch-pending = {{ kapacitor_collectd_batch_pending | to_json }}
+  batch-size = {{ kapacitor_collectd_batch_size | to_json }}
+  batch-timeout = "{{ kapacitor_collectd_batch_timeout }}"
+  bind-address = "{{ kapacitor_collectd_bind_address }}"
+  database = "{{ kapacitor_collectd_database }}"
+  enabled = {{ kapacitor_collectd_enabled | to_json }}
+  read-buffer = {{ kapacitor_collectd_read_buffer | to_json }}
+  retention-policy = "{{ kapacitor_collectd_retention_policy }}"
+  typesdb = "{{ kapacitor_collectd_typesdb }}"
+
+[opentsdb]
+  batch-pending = {{ kapacitor_opentsdb_batch_pending | to_json }}
+  batch-size = {{ kapacitor_opentsdb_batch_size | to_json }}
+  batch-timeout = "{{ kapacitor_opentsdb_batch_timeout }}"
+  bind-address = "{{ kapacitor_opentsdb_bind_address }}"
+  certificate = "{{ kapacitor_opentsdb_certificate }}"
+  consistency-level = "{{ kapacitor_opentsdb_consistency_level }}"
+  database = "{{ kapacitor_opentsdb_database }}"
+  enabled = {{ kapacitor_opentsdb_enabled | to_json }}
+  log-point-errors = {{ kapacitor_opentsdb_log_point_errors | to_json }}
+  retention-policy = "{{ kapacitor_opentsdb_retention_policy }}"
+  tls-enabled = {{ kapacitor_opentsdb_tls_enabled | to_json }}
+
+[alerta]
+  enabled = {{ kapacitor_alerta_enabled | to_json }}
+  environment = "{{ kapacitor_alerta_environment }}"
+  insecure-skip-verify = {{ kapacitor_alerta_insecure_skip_verify | to_json }}
+  origin = "{{ kapacitor_alerta_origin }}"
+  token = "{{ kapacitor_alerta_token }}"
+  token-prefix = "{{ kapacitor_alerta_token_prefix }}"
+  url = "{{ kapacitor_alerta_url }}"
+
+[hipchat]
+  enabled = {{ kapacitor_hipchat_enabled | to_json }}
+  global = {{ kapacitor_hipchat_global | to_json }}
+  room = "{{ kapacitor_hipchat_room }}"
+  state-changes-only = {{ kapacitor_hipchat_state_changes_only | to_json }}
+  token = "{{ kapacitor_hipchat_token }}"
+  url = "{{ kapacitor_hipchat_url }}"
+
+[opsgenie]
+  api-key = "{{ kapacitor_opsgenie_api_key }}"
+  enabled = {{ kapacitor_opsgenie_enabled | to_json }}
+  global = {{ kapacitor_opsgenie_global | to_json }}
+  recovery_url = "{{ kapacitor_opsgenie_recovery_url }}"
+  url = "{{ kapacitor_opsgenie_url }}"
+
+[pagerduty]
+  enabled = {{ kapacitor_pagerduty_enabled | to_json }}
+  global = {{ kapacitor_pagerduty_global | to_json }}
+  service-key = "{{ kapacitor_pagerduty_service_key }}"
+  url = "{{ kapacitor_pagerduty_url }}"
+
+[pushover]
+  enabled = {{ kapacitor_pushover_enabled | to_json }}
+  token = "{{ kapacitor_pushover_token }}"
+  url = "{{ kapacitor_pushover_url }}"
+  user-key = "{{ kapacitor_pushover_user_key }}"
+
+[smtp]
+  enabled = {{ kapacitor_smtp_enabled | to_json }}
+  from = "{{ kapacitor_smtp_from }}"
+  global = {{ kapacitor_smtp_global | to_json }}
+  host = "{{ kapacitor_smtp_host }}"
+  idle-timeout = "{{ kapacitor_smtp_idle_timeout }}"
+  no-verify = {{ kapacitor_smtp_no_verify | to_json }}
+  password = "{{ kapacitor_smtp_password }}"
+  port = {{ kapacitor_smtp_port | to_json }}
+  state-changes-only = {{ kapacitor_smtp_state_changes_only | to_json }}
+  username = "{{ kapacitor_smtp_username }}"
+
+[snmptrap]
+  addr = "{{ kapacitor_snmptrap_addr }}"
+  community = "{{ kapacitor_snmptrap_community }}"
+  enabled = {{ kapacitor_snmptrap_enabled | to_json }}
+  retries = {{ kapacitor_snmptrap_retries | to_json }}
+
+[sensu]
+  addr = "{{ kapacitor_sensu_addr }}"
+  enabled = {{ kapacitor_sensu_enabled | to_json }}
+  source = "{{ kapacitor_sensu_source }}"
+
+[slack]
+  channel = "{{ kapacitor_slack_channel }}"
+  enabled = {{ kapacitor_slack_enabled | to_json }}
+  global = {{ kapacitor_slack_global | to_json }}
+  icon-emoji = "{{ kapacitor_slack_icon_emoji }}"
+  insecure-skip-verify = {{ kapacitor_slack_insecure_skip_verify | to_json }}
+  ssl-ca = "{{ kapacitor_slack_ssl_ca }}"
+  ssl-cert = "{{ kapacitor_slack_ssl_cert }}"
+  ssl-key = "{{ kapacitor_slack_ssl_key }}"
+  state-changes-only = {{ kapacitor_slack_state_changes_only | to_json }}
+  url = "{{ kapacitor_slack_url }}"
+  username = "{{ kapacitor_slack_username }}"
+
+[talk]
+  author_name = "{{ kapacitor_talk_author_name }}"
+  enabled = {{ kapacitor_talk_enabled | to_json }}
+  url = "{{ kapacitor_talk_url }}"
+
+[telegram]
+  chat-id = "{{ kapacitor_telegram_chat_id }}"
+  disable-notification = {{ kapacitor_telegram_disable_notification | to_json }}
+  disable-web-page-preview = {{ kapacitor_telegram_disable_web_page_preview | to_json }}
+  enabled = {{ kapacitor_telegram_enabled | to_json }}
+  global = {{ kapacitor_telegram_global | to_json }}
+  parse-mode = "{{ kapacitor_telegram_parse_mode }}"
+  state-changes-only = {{ kapacitor_telegram_state_changes_only | to_json }}
+  token = "{{ kapacitor_telegram_token }}"
+  url = "{{ kapacitor_telegram_url }}"
+
+[victorops]
+  api-key = "{{ kapacitor_victorops_api_key }}"
+  enabled = {{ kapacitor_victorops_enabled | to_json }}
+  global = {{ kapacitor_victorops_global | to_json }}
+  routing-key = "{{ kapacitor_victorops_routing_key }}"
+  url = "{{ kapacitor_victorops_url }}"
+
+[reporting]
+  enabled = {{ kapacitor_reporting_enabled | to_json }}
+  url = "{{ kapacitor_reporting_url }}"
+
+[stats]
+  database = "{{ kapacitor_stats_database }}"
+  enabled = {{ kapacitor_stats_enabled| to_json }}
+  retention-policy = "{{ kapacitor_stats_retention_policy }}"
+  stats-interval = "{{ kapacitor_stats_stats_interval }}"
+  timing-movavg-size = {{ kapacitor_stats_timing_movavg_size | to_json }}
+  timing-sample-rate = {{ kapacitor_stats_timing_sample_rate | to_json }}
+
+[udf]
+
+[deadman]
+  global = {{ kapacitor_deadman_global | to_json }}
+  id = "{{ kapacitor_deadman_id }}"
+  interval = "{{ kapacitor_deadman_interval }}"
+  message = "{{ kapacitor_deadman_message }}"
+  threshold = {{ kapacitor_deadman_threshold | to_json }}
+
