@@ -5,8 +5,6 @@ kapacitor_deb_pkg_url: 'https://dl.influxdata.com/kapacitor/releases/kapacitor_1
 kapacitor_rpm_pkg_url: 'https://dl.influxdata.com/kapacitor/releases/kapacitor-1.3.1.x86_64.rpm'
 kapacitor_config_file: '/etc/kapacitor/kapacitor.conf'
 kapacitor_apt_repo_url: "deb https://repos.influxdata.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
-kapacitor_http_shared_secret: ""
-kapacitor_http_auth_enabled: 'true'
 kapacitor_tick_work_dir: "/usr/local/etc/kapacitor/tick"
 kapacitor_tick_script_dest_dir: "{{ kapacitor_tick_work_dir }}/script"
 kapacitor_tick_template_dest_dir: "{{ kapacitor_tick_work_dir }}/template"
