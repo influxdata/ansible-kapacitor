@@ -189,3 +189,6 @@ default-retention-policy = "{{ kapacitor_default_retention_policy }}"
   message = "{{ kapacitor_deadman_message }}"
   threshold = {{ kapacitor_deadman_threshold | to_json }}
 
+[load]
+  enabled = {{ kapacitor_load_enabled | to_json }}
+  dir = "{{ kapacitor_load_dir }}"
