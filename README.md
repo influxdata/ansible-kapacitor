@@ -21,6 +21,7 @@ Example playbook usage:
 
 ```
 - hosts: 'kapacitor'
+  become: true
   roles:
       - 'kapacitor'
   vars:
