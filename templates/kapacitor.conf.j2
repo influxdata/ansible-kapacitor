@@ -192,3 +192,10 @@ default-retention-policy = "{{ kapacitor_default_retention_policy }}"
 [load]
   enabled = {{ kapacitor_load_enabled | to_json }}
   dir = "{{ kapacitor_load_dir }}"
+
+{% if kapacitor_enterprise_key is defined %}
+[enterprise]
+  license-key = "{{ kapacitor_enterprise_key }}"
+{% elif kapacitor_enterprise_path is defined %}
+  license-path = "{{ kapacitor_enterprise_path }}"
+{% endif %}

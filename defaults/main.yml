@@ -174,3 +174,5 @@ kapacitor_deadman_message: '{%raw%}{{ .ID }} is {{ if eq .Level \"OK\" }}alive{{
 kapacitor_deadman_threshold: 0.0
 kapacitor_load_enable: false
 kapacitor_load_dir: ""
+kapacitor_enterprise_key: ""
+kapacitor_enterprise_path: ""
