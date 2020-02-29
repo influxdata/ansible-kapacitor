@@ -1,5 +1,5 @@
 ---
-kapacitor_ver: '1.5.2'
+kapacitor_ver: '1.5.4'
 kapacitor_use_repo: true
 kapacitor_pkg_url: 'https://dl.influxdata.com/kapacitor/releases/kapacitor_{{ kapacitor_ver }}_amd64.deb'
 kapacitor_deb_pkg_url: 'https://dl.influxdata.com/kapacitor/releases/kapacitor_{{ kapacitor_ver }}_amd64.deb'
