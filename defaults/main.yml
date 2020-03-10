@@ -172,5 +172,5 @@ kapacitor_deadman_id: "{%raw%}node 'NODE_NAME' in task '{{ .TaskName }}'{%endraw
 kapacitor_deadman_interval: "10s"
 kapacitor_deadman_message: '{%raw%}{{ .ID }} is {{ if eq .Level \"OK\" }}alive{{ else }}dead{{ end }}: {{ index .Fields \"collected\" | printf \"%0.3f\" }} points/INTERVAL.{%endraw%}'
 kapacitor_deadman_threshold: 0.0
-kapacitor_load_enable: false
+kapacitor_load_enabled: false
 kapacitor_load_dir: ""
