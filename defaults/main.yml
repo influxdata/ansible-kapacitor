@@ -56,6 +56,7 @@ kapacitor_influx:
     subscriptions-sync-interval: "1m0s"
 kapacitor_http_bind_address: ":9092"
 kapacitor_http_https_certificate: "/etc/ssl/kapacitor.pem"
+kapacitor_http_https_key: "/etc/ssl/kapacitor.key"
 kapacitor_http_https_enabled: false
 kapacitor_http_log_enabled: true
 kapacitor_http_pprof_enabled: false
