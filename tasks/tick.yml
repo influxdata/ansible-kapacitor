@@ -14,6 +14,7 @@
   copy:
     src:  "{{ item }}"
     dest: "{{ kapacitor_tick_script_dest_dir }}"
+    validate: "/usr/bin/tickfmt %s"
   with_fileglob:
     - "{{ kapacitor_tick_script_dir }}/*.tick"
   tags: 'kapacitor-tick'
@@ -22,6 +23,7 @@
   copy:
     src:  "{{ item }}"
     dest: "{{ kapacitor_tick_template_dest_dir }}"
+    validate: "/usr/bin/tickfmt %s"
   with_fileglob:
     - "{{ kapacitor_tick_template_dir }}/*.tick"
   tags: 'kapacitor-tick'
