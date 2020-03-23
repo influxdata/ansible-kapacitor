@@ -28,6 +28,7 @@ default-retention-policy = "{{ kapacitor_default_retention_policy }}"
   auth-enabled = {{ kapacitor_http_auth_enabled | to_json }}
   bind-address = "{{ kapacitor_http_bind_address }}"
   https-certificate = "{{ kapacitor_http_https_certificate }}"
+  https-private-key = "{{ kapacitor_http_https_key }}"
   https-enabled = {{ kapacitor_http_https_enabled | to_json }}
   log-enabled = {{ kapacitor_http_log_enabled | to_json }}
   pprof-enabled = {{ kapacitor_http_pprof_enabled | to_json }}

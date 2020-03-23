@@ -25,7 +25,7 @@ Example playbook usage:
   roles:
       - 'kapacitor'
   vars:
-    kapacitor_config_influx:
+    kapacitor_influx:
       - name: "production01"
         enabled: true
         default: true
