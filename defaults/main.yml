@@ -142,7 +142,9 @@ kapacitor_slack_ssl_cert: ""
 kapacitor_slack_ssl_key: ""
 kapacitor_slack_state_changes_only: false
 kapacitor_slack_url: ""
+kapacitor_slack_token: ""
 kapacitor_slack_username: "kapacitor"
+kapacitor_slack_default: false
 kapacitor_talk_author_name: ""
 kapacitor_talk_enabled: false
 kapacitor_talk_url: ""
