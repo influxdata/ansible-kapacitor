@@ -91,11 +91,14 @@ default-retention-policy = "{{ kapacitor_default_retention_policy }}"
   token = "{{ kapacitor_hipchat_token }}"
   url = "{{ kapacitor_hipchat_url }}"
 
-[opsgenie]
+[opsgenie2]
   api-key = "{{ kapacitor_opsgenie_api_key }}"
+  details = {{ kapacitor_opsgenie_details | to_json}}
   enabled = {{ kapacitor_opsgenie_enabled | to_json }}
   global = {{ kapacitor_opsgenie_global | to_json }}
-  recovery_url = "{{ kapacitor_opsgenie_recovery_url }}"
+  recipients = {{ kapacitor_opsgenie_recipients | to_json }}
+  recovery_action = "{{ kapacitor_opsgenie_recovery_action }}"
+  teams = {{ kapacitor_opsgenie_teams | to_json }}
   url = "{{ kapacitor_opsgenie_url }}"
 
 [pagerduty]
