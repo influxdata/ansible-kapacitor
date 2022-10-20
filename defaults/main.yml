@@ -103,9 +103,12 @@ kapacitor_hipchat_state_changes_only: false
 kapacitor_hipchat_token: ""
 kapacitor_hipchat_url: ""
 kapacitor_opsgenie_api_key: ""
+kapacitor_opsgenie_details: false
 kapacitor_opsgenie_enabled: false
 kapacitor_opsgenie_global: false
-kapacitor_opsgenie_recovery_url: "https://api.opsgenie.com/v1/json/alert/note"
+kapacitor_opsgenie_recipients: []
+kapacitor_opsgenie_recovery_action: "notes"
+kapacitor_opsgenie_teams: []
 kapacitor_opsgenie_url: "https://api.opsgenie.com/v1/json/alert"
 kapacitor_pagerduty_enabled: false
 kapacitor_pagerduty_global: false
@@ -142,7 +145,9 @@ kapacitor_slack_ssl_cert: ""
 kapacitor_slack_ssl_key: ""
 kapacitor_slack_state_changes_only: false
 kapacitor_slack_url: ""
+kapacitor_slack_token: ""
 kapacitor_slack_username: "kapacitor"
+kapacitor_slack_default: false
 kapacitor_talk_author_name: ""
 kapacitor_talk_enabled: false
 kapacitor_talk_url: ""
