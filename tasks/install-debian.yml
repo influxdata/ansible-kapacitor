@@ -14,7 +14,7 @@
 
 - name: 'Debian - Import InfluxData GPG signing key'
   apt_key:
-    url: 'https://repos.influxdata.com/influxdata-oss-archive_compat.key'
+    url: 'https://repos.influxdata.com/influxdata-archive_compat.key'
     state: 'present'
   when: kapacitor_use_repo
 
