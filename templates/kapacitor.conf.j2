@@ -182,6 +182,13 @@ default-retention-policy = "{{ kapacitor_default_retention_policy }}"
   timing-sample-rate = {{ kapacitor_stats_timing_sample_rate | to_json }}
 
 [udf]
+[udf.functions]
+{% for udf in kapacitor_udf %}
+  [udf.functions.{{ udf.name }}]
+{% for k, v in udf|dictsort if k != "name" %}
+    {{ k }} = {{ v| to_json }}
+{% endfor %}
+{% endfor %}
 
 [deadman]
   global = {{ kapacitor_deadman_global | to_json }}
